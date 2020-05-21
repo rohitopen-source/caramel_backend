@@ -1,2 +1,5 @@
 # caramel_backend
-use npm i express mongoose cors nodemon nodemailer dotenv 
+write  following commands in terminal in project directory 
+   npm i express mongoose cors nodemon nodemailer dotenv 
+
+ 
