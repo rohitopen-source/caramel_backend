@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
 
-let Contactacademy = new Schema({
+let Contact= new Schema({
     name: {
         type: String
     },
@@ -25,4 +25,4 @@ let Contactacademy = new Schema({
         type: Number
     }
 });
-module.exports = mongoose.model('Contact',Contactacademy);
+module.exports = mongoose.model('Contact',Contact);

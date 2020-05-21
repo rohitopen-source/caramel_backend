@@ -1,9 +1,11 @@
+require('dotenv').config;
 const express = require('express')
 const app = express()
 const bodyparser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const contactRoute = express.Router()
+const nodemailer = require('nodemailer')
 
 let Contact = require('./module.contact')
 
@@ -15,6 +17,15 @@ const connection = mongoose.connection;
 connection.once('open',function(){
     console.log("Monogodb database connection established sucessfully")
 })
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'process.env.EMAIL',
+        pass : 'process.env.PASSWORD'
+    }
+});
+
 contactRoute.route('/').get(function(req,res){
     Contact.find(function(err,contacts){
         if(err)
@@ -32,39 +43,24 @@ contactRoute.route('/add').post(function(req,res){
     contactinfo.save()
                .then(contactinfo => {
                
-                const nodemailer = require("nodemailer");
+                let eval = contactinfo.email;
+                let mailOptions = {
+                    from: 'data.web.development@gmail.com',
+                    to: eval,
+                    subject: "testing ",
+                    text: 'it is working '
+                }   
 
-                async function main() {
+                transporter.sendMail(mailOptions,function(err,data){
                 
-                  let testAccount = await nodemailer.createTestAccount();
-                
-                  // create reusable transporter object using the default SMTP transport
-                  let transporter = nodemailer.createTransport({
-                    host: "smtp.ethereal.email",
-                    port: 587,
-                    secure: false, // true for 465, false for other ports
-                    auth: {
-                      user: testAccount.user, // generated ethereal user
-                      pass: testAccount.pass, // generated ethereal password
-                    },
-                  });
-                
-                  // send mail with defined transport object
-                  let info = await transporter.sendMail({
-                    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-                    to: "bar@example.com, baz@example.com", // list of receivers
-                    subject: "Hello ✔", // Subject line
-                    text: "Hello world?", // plain text body
-                    html: "<b>Hello world?</b>", // html body
-                  });
-                
-                  console.log("Message sent: %s", info.messageId);
-                  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-                 
-                }
-                
-                main().catch(console.error);
-                   res.status(200).json({'contactinfo' :'contact info added sucessfully' })
+                    if(err){
+                        console.log('error occurs',err);
+                    }else {
+                        console.log('emailsent !!');
+                    }
+                });
+
+                   res.send(contactinfo.email)
                }) 
                .catch(err => {
                    res.status(400).send('adding detail failed')
@@ -72,8 +68,8 @@ contactRoute.route('/add').post(function(req,res){
 })
 
 
-app.use('/contact',contactRoute)
+app.use('/',contactRoute)
 
-app.listen(6789,() =>{
-    console.log("server started at http://localhost:6789")
+app.listen(6688,() =>{
+    console.log("server started at http://localhost:6688")
 })
