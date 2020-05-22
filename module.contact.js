@@ -26,7 +26,7 @@ let Contact= new Schema({
     },
     budget: {
 
-        type: Number
+        type: String
     },
     
     service: {

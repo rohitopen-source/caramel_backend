@@ -21,8 +21,8 @@ connection.once('open',function(){
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'data.web.development@gmail.com',
-        pass : '@99advanced'
+        user: 'data.web.development@gmail.com',//enter gmail account from which you want to send email
+        pass : ''//enter password of your gmail
     }
 });
 
@@ -44,13 +44,13 @@ contactRoute.route('/add').post(function(req,res){
                .then(contactinfo => {
                
                 let eval = contactinfo.email;
-                
+                let nm = contactinfo.name ;
 
                 let mailOptions = {
                     from: 'data.web.development@gmail.com',
                     to: eval,
                     subject: "Thanks for your response",
-                  text: "HI, Caramel will get back to you soon "
+                    text: 'Hi '+ nm + ',Caramel will get back to you soon '
                 }   
 
                 transporter.sendMail(mailOptions,function(err,data){
