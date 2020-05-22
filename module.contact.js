@@ -12,17 +12,26 @@ let Contact= new Schema({
     email : {
         type: String
     },
-    category: {
+    program: {
         type: String
     },
-    subcategory: {
+    subprogram: {
         type:String
     },
     phone:{
         type: Number
     },
     zip: {
+        type: String
+    },
+    budget: {
+
         type: Number
+    },
+    
+    service: {
+        type:String
     }
+
 });
 module.exports = mongoose.model('Contact',Contact);
