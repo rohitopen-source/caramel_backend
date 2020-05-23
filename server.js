@@ -22,7 +22,7 @@ let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'data.web.development@gmail.com',//enter gmail account from which you want to send email
-        pass : ''//enter password of your gmail
+        pass : '@99advanced'//enter password of your gmail
     }
 });
 

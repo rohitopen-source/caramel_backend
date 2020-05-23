@@ -31,7 +31,14 @@ let Contact= new Schema({
     
     service: {
         type:String
+    },
+    states: {
+        type:String
+    },
+    userE: {
+        type:String
     }
+
 
 });
 module.exports = mongoose.model('Contact',Contact);
